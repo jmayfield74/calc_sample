@@ -48,62 +48,8 @@ defmodule CalcSample.Calculations.Leaf do
     end
   end
 
-  # code_interface do
-  #   define :create
-
-  #   define :read_by_id
-  #   define :read_by_flow_ordered
-  #   define :read_by_flow
-  #   define :read_by_flow_and_phase
-
-  #   define :follow
-  #   define :start
-  #   define :complete
-  #   define :pend
-  #   define :reject
-  # end
-
   actions do
     defaults [:read]
-
-    # create :create do
-    #   accept [:flow_id, :phase_id, :follows]
-    # end
-
-    # read :read_by_id do
-    #   argument :id, :uuid, allow_nil?: false
-    #   filter expr(id == ^arg(:id))
-    # end
-
-    # read :read_by_flow_ordered do
-    #   argument :flow_id, :uuid, allow_nil?: false
-    #   manual PhaseManager.Projects.Actions.ReadFlowPhasesOrdered
-    # end
-
-    # # use read_by_flow_ordered action instead, or the linked list of flow_phases may come back un-ordered
-    # read :read_by_flow do
-    #   argument :flow_id, :uuid, allow_nil?: false
-    #   filter expr(flow_id == ^arg(:flow_id))
-    # end
-
-    # read :read_by_flow_and_phase do
-    #   argument :flow_id, :uuid, allow_nil?: false
-    #   argument :phase_slug, :atom, allow_nil?: false
-
-    #   get? true
-
-    #   prepare fn query, _context ->
-    #     phase = Phase.by_slug!(query.arguments.phase_slug)
-
-    #     query
-    #     |> Ash.Query.filter(phase_id == ^phase.id)
-    #     |> Ash.Query.filter(flow_id == ^query.arguments.flow_id)
-    #   end
-    # end
-
-    # update :follow do
-    #   accept [:follows]
-    # end
 
     update :start do
       change transition_state(:current)
@@ -129,11 +75,5 @@ defmodule CalcSample.Calculations.Leaf do
       get(:get_leaf, :read)
       list(:list_leaves, :read)
     end
-
-    # mutations do
-    #   update :start_flow_phase, :start
-    #   update :complete_flow_phase, :complete
-    #   update :reject_flow_phase, :reject
-    # end
   end
 end
